@@ -2,6 +2,11 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: easy_admin/easy_admin_settings.yml }
+    - { resource: article.yml }
+    - { resource: uploader.yml }
+    - { resource: paginator.yml }
+    - { resource: liipimage.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -32,11 +37,14 @@ framework:
     assets: ~
     php_errors:
         log: true
+    translator: ~
 
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+            - bootstrap_3_layout.html.twig
 
 # Doctrine Configuration
 doctrine:

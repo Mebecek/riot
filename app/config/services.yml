@@ -14,6 +14,10 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
 
+    AppBundle\Controller\Service\FileUploader:
+        arguments:
+            $targetDir: '%images_dir%'
+
     # makes classes in src/AppBundle available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     AppBundle\:
@@ -33,3 +37,21 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    app.security.login_form_authenticator:
+            class: AppBundle\Controller\Security\LoginFormAuthenticator
+            autowire: true
+    app.doctrine.hash_password_listener:
+            class: AppBundle\Doctrine\HashPasswordListener
+            autowire: true
+            tags:
+              - { name: doctrine.event_subscriber }
+
+    AppBundle\Repository\CommentRepository:
+      class: AppBundle\Repository\CommentRepository
+      factory: ['@doctrine.orm.default_entity_manager', 'getRepository']
+      arguments:
+        - AppBundle\Entity\Comment
+
+    AppBundle\Controller\CommentRepository:
+        class: AppBundle\Controller\CommentController
+        arguments: ['@AppBundle\Repository\CommentRepository', '@twig', '@form.factory', '@doctrine.orm.default_entity_manager', '@security.token_storage']

@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blogas{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1>{{ data.title }}</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>{{ data.title }}</strong>
+                    </div>
+                    <div class="panel-body">
+                        {{ data.text|raw }}
+                        <div class="panel-body">
+                            <img src="{{ asset('uploads/images/' ~ data.imageName) | imagine_filter('my_thumb') }}">
+                        </div>
+                    </div>
+                </div>
+                <i><span>written by {{ data.author }} at</span>  <span class="text-muted">{{ data.updatedAt|date('Y-m-d H:i:s') }}</span></i>
+            </div>
+        </div>
+        <hr>
+            {% if is_granted('ROLE_USER') %}
+                <a class="btn btn-primary" href="{{ path('comment_new', {'productId': data.id}) }}">Add Comment</a>
+            {% else %}
+                <span>You must be logged in to post a comment</span> | <a href="{{ path('security_login') }}">Login</a>
+            {% endif %}
+        <hr>
+        <div class="row">
+            {% for item in allcomments %}
+            <div class="col-sm-1">
+                <div class="thumbnail">
+                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                </div>
+            </div>
+
+            <div class="col-sm-11">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>{{ item.author }}</strong> <span class="text-muted">{{ item.publishedAt|date('Y-m-d H:i:s') }}</span>
+                        {% if is_granted('ROLE_USER') %}
+                            <a class="btn btn-primary" href="{{ path('comment_comment_new', {'productId': data.id, 'commentId': item.id}) }}">Add Comment</a>
+                        {% endif %}
+                    </div>
+                    <div class="panel-body">
+                        {{ item.content|raw }}
+                    </div>
+                </div>
+            </div>
+                {% for itemm in comments %}
+                    {% if itemm.comment is not null %}
+                        {% if itemm.comment.id == item.id %}
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="thumbnail">
+                                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-10">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong>{{ item.author }}</strong> <span class="text-muted">{{ item.publishedAt|date('Y-m-d H:i:s') }}</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        {{ itemm.content|raw }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
