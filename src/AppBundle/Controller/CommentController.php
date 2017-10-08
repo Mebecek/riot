@@ -5,11 +5,12 @@ namespace AppBundle\Controller;
 use AppBundle\Controller\Form\CommentForm;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -53,6 +54,7 @@ class CommentController extends Controller
 
     /**
      * @Route("/article/{productId}/new", name="comment_new")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function newAction(Request $request, $productId)
     {
@@ -66,7 +68,7 @@ class CommentController extends Controller
             /** @var Product $product */
             $product = $em->getRepository(Product::class)->find($productId);
 
-            $comment->setAuthor($this->tokenStorsge->getToken()->getUser());
+            $comment->setAuthor($this->getUser());
             $comment->setProduct($product);
             $comment->setContent($form->get('content')->getData());
 
@@ -82,6 +84,7 @@ class CommentController extends Controller
 
     /**
      * @Route("/article/{productId}/{commentId}/new", name="comment_comment_new")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function newcomAction(Request $request, $productId, $commentId)
     {
@@ -90,13 +93,13 @@ class CommentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->get('doctrine')->getManager();
             /** @var Product $product */
             $product = $em->getRepository(Product::class)->find($productId);
             $commentt = $em->getRepository(Comment::class)->find($commentId);
 
-            $comment->setAuthor($this->tokenStorsge->getToken()->getUser());
+
+            $comment->setAuthor($this->getUser());
             $comment->setProduct($product);
             $comment->setContent($form->get('content')->getData());
             $comment->setCommentlist($commentt);
@@ -106,8 +109,8 @@ class CommentController extends Controller
 
         }
 
-        return $this->render(':form:comment.html.twig', array(
+        return $this->render(':form:comment.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }

@@ -9,6 +9,7 @@
 namespace AppBundle\Controller\Form;
 
 use AppBundle\Entity\Product;
+use AppBundle\Entity\ProductPicture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +23,7 @@ class ProductType extends AbstractType
             ->add('title')
             ->add('perex')
             ->add('text')
-            ->add('imageFile', FileType::class, ['label' => 'Brochure (PDF file)'])
+            ->add('imageFile', FileType::class, ['multiple'=>true, 'required'=>false])
         ;
     }
 

@@ -11,10 +11,12 @@ namespace AppBundle\Controller;
 use AppBundle\Controller\Form\ArticleForm;
 use AppBundle\Entity\Article;
 use AppBundle\Entity\Comment;
+use AppBundle\Entity\ProductPicture;
 use AppBundle\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Product;
@@ -26,6 +28,7 @@ class ProductController extends Controller
 {
     /**
      * @Route("/article/new", name="article_new")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function newAction(Request $request, FileUploader $fileUploader)
     {
@@ -43,6 +46,7 @@ class ProductController extends Controller
 
             $em->persist($product);
             $em->flush();
+            $this->addFlash("success", "Article was successfully added");
 
         }
 
@@ -63,8 +67,7 @@ class ProductController extends Controller
 
         $blogPosts = $paginator->paginate(
             $records,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 5)
+            $request->query->getInt('page', 1),5
         );
 
         return $this->render('article/articles.html.twig', [
@@ -84,15 +87,22 @@ class ProductController extends Controller
         $product = $em->getRepository(Product::class)
             ->find($productId);
 
+        $images = $em->getRepository(ProductPicture::class)
+                ->findBy(['product' => $productId]);
+
         $repository = $em->getRepository(Comment::class);
         $allcomments = $repository->findBy(['product' => $productId, 'comment' => null], ['id' => 'DESC']);
 
         $comentary = $repository->findBy(['product' => $productId, 'comment' => $allcomments], ['id' => 'DESC']);
 
+        $cmts = $repository->findBy(['product' => $productId, 'comment' => $comentary], ['id' => 'DESC']);
+
         return $this->render('article/article_view.html.twig', [
             'data' => $product,
             'allcomments' => $allcomments,
             'comments' => $comentary,
+            'cmts' => $cmts,
+            'images' => $images,
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);
     }

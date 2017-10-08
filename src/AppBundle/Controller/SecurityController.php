@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\Controller\Form\LoginForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SecurityController extends Controller
 {
@@ -31,10 +32,10 @@ class SecurityController extends Controller
 
         return $this->render(
             'form/login.html.twig',
-            array(
+            [
                 'form' => $form->createView(),
                 'error' => $error,
-            )
+            ]
         );
     }
 

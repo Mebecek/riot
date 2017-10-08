@@ -17,11 +17,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Comment
 {
-    public function __construct()
-    {
-        $this->publishedAt = new \DateTime();
-    }
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -52,11 +47,11 @@ class Comment
     private $content;
 
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="user")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
-     */
+ * @var User
+ *
+ * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="user")
+ * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+ */
     private $author;
 
     /**
@@ -68,8 +63,8 @@ class Comment
     private $publishedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comment")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comment", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $comment;
 
@@ -185,4 +180,8 @@ class Comment
         $this->comment = $comment;
     }
 
+    public function __construct()
+    {
+        $this->publishedAt = new \DateTime();
+    }
 }

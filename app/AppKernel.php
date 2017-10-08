@@ -18,8 +18,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new JavierEguiluz\Bundle\EasyAdminBundle\EasyAdminBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new Vich\UploaderBundle\VichUploaderBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 
         ];

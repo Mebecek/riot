@@ -1,5 +1,3 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/book/security.html
 security:
     encoders:
         AppBundle\Entity\User: bcrypt
@@ -8,12 +6,10 @@ security:
         ROLE_ADMIN: [ROLE_MODERATOR, ROLE_MANAGE_ARTICLES, ROLE_ALLOWED_TO_SWITCH]
         ROLE_MODERATOR: [ROLE_MANAGE_ARTICLES, ROLE_ALLOWED_TO_SWITCH]
         ROLE_EDITOR: [ROLE_MANAGE_ARTICLES]
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         our_users:
             entity: { class: AppBundle\Entity\User, property: email }
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -27,14 +23,7 @@ security:
                 path: /logout
 
             switch_user: ~
-            # activate different ways to authenticate
-
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # https://symfony.com/doc/current/security/form_login_setup.html
-            #form_login: ~
     access_control:
         - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_MODERATOR] }
         - { path: ^/settings/, role: ROLE_USER }
-        - { path: ^/article/, role: ROLE_USER }
+        - { path: ^/article/new, role: ROLE_USER }

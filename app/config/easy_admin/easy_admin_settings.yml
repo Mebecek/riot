@@ -1,34 +1,25 @@
 easy_admin:
-    site_name: 'Blog'
+    site_name: 'Admin panel'
+
+    formats:
+        datetime: 'd/m/Y h:i A e'
 
     list:
         actions:
             - { name: 'show', icon: 'search', label: '' }
             - { name: 'edit', icon: 'pencil', label: '' }
             - { name: 'delete', icon: 'remove', label: '' }
-    design:
-        brand_color: '#4C0000'
-        form_theme: 'vertical'
+
     entities:
-        Product:
-            form:
-                fields:
-                    - 'title'
-                    - 'perex'
-                    - { property: 'text', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
-                    - { property: 'imageFile', type: 'file' }
-            class: AppBundle\Entity\Product
-            list:
-                fields:
-                    - 'id'
-                    - 'title'
-                    - 'text'
-                    - 'author'
-                    - 'updatedAt'
         User:
             class: AppBundle\Entity\User
             label: 'Users'
             password_encoding: { algorithm: 'bcrypt'}
+            show:
+                fields:
+                    - 'id'
+                    - 'email'
+                    - 'roles'
             list:
                 title: '%%entity_label%% list'
                 fields:
@@ -40,14 +31,40 @@ easy_admin:
                 title: '%%entity_label%% list'
                 fields:
                     - 'email'
-        Comment:
-            form:
-                fields:
-                    - { property: 'content', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
-            class: AppBundle\Entity\Comment
-            list:
+
+        Champion:
+            class: AppBundle\Entity\Champion
+            label: 'Champions'
+            show:
                 fields:
                     - 'id'
-                    - 'content'
-                    - 'author'
-                    - 'publishedAt'
+                    - 'championId'
+                    - 'name'
+                    - 'title'
+                    - { property: 'image', type: 'image', base_path: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' }
+            list:
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - 'championId'
+                    - 'name'
+        Version:
+            class: AppBundle\Entity\Timer
+            label: 'Info'
+            show:
+                fields:
+                    - 'version'
+                    - 'timestamp'
+            list:
+                title: 'Current LoL version'
+                fields:
+                    - 'version'
+                    - 'timestamp'
+
+    design:
+        brand_color: '#4C0000'
+        form_theme: 'vertical'
+        menu:
+            - { entity: 'User', label: 'Users', icon: 'user' }
+            - { entity: 'Champion', label: 'Champions', icon: 'fa fa-address-book' }
+            - { entity: 'Version', label: 'Info', icon: 'info' }

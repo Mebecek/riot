@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CommentForm extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('content')
@@ -24,8 +24,8 @@ class CommentForm extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => Comment::class,
-        ));
+        $resolver->setDefaults([
+            'data_class' => Comment::class
+        ]);
     }
 }

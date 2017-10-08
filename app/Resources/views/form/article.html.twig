@@ -7,6 +7,11 @@
             <div class="col-xs-12">
                 <h1>New Post</h1>
                 <hr>
+                {% for flash_message in app.session.flashBag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
                 <form method="post" enctype="multipart/form-data">
                     {{ form_widget(form) }}
 

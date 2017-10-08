@@ -15,8 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Entity()
+ * @ORM\Table()
  * @UniqueEntity(fields={"email"}, message="It looks like your already have an account!")
  */
 class User implements UserInterface
@@ -34,6 +34,12 @@ class User implements UserInterface
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
+
+    /**
+     * @Assert\NotBlank()
+     * @ORM\Column(type="string")
+     */
+    private $nickname;
 
     /**
      * @ORM\Column(type="string")
@@ -157,4 +163,22 @@ class User implements UserInterface
     public function __toString() {
         return $this->email;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * @param mixed $nickname
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+    }
+
+
 }

@@ -11,6 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -64,75 +65,73 @@ class Product
     private $text;
 
     /**
-     *
-     * @Vich\UploadableField(mapping="product_image", fileNameProperty="imageName", size="imageSize")
-     * @Assert\File(
-     *     maxSize = "1024k",
-     *     mimeTypes = {"image/png", "image/jpeg", "image/jpg"},
-     *     mimeTypesMessage = "Please upload a valid valid IMAGE"
-     * )
-     *
-     * @var File
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductPicture", mappedBy="product", cascade={"all"}, orphanRemoval=true)
      */
-    private $imageFile;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     *
-     * @var string
-     */
-    private $imageName;
+    private $pictures;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     *
-     * @var \DateTime
      */
-    private $updatedAt;
+    private $date;
+
+    public function __construct()
+    {
+        $this->pictures = new ArrayCollection();
+        $this->date = new \DateTime("now");
+    }
 
     /**
-     *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
-     *
-     * @return Product
+     * @return ArrayCollection
      */
-    public function setImageFile(File $image = null)
+    public function getPictures()
     {
-        $this->imageFile = $image;
+        return $this->pictures;
+    }
 
-        if ($image) {
-            $this->updatedAt = new \DateTime('now');
+    /**
+     * @param ArrayCollection $pictures
+     */
+    public function setPictures($pictures)
+    {
+        $this->pictures = $pictures;
+    }
+
+    public function getimageFile()
+    {
+        return null;
+    }
+
+    public function setimageFile(array $files=array())
+    {
+        if (!$files) return [];
+        foreach ($files as $file) {
+            if (!$file) return [];
+            $this->imageFile($file);
         }
-
-        return $this;
+        return [];
     }
 
-    /**
-     * @return File|null
-     */
-    public function getImageFile()
+    public function imageFile(UploadedFile $file=null)
     {
-        return $this->imageFile;
+        if (!$file) {
+            return;
+        }
+        $picture = new ProductPicture();
+        $picture->setImageFile($file);
+        $this->addPicture($picture);
     }
 
-    /**
-     * @param string $imageName
-     *
-     * @return Product
-     */
-    public function setImageName($imageName)
+    public function addPicture(ProductPicture $picture)
     {
-        $this->imageName = $imageName;
-
-        return $this;
+        $picture->setProduct($this);
+        $this->pictures->add($picture);
     }
 
-    /**
-     * @return string|null
-     */
-    public function getImageName()
+    public function removePicture(ProductPicture $picture)
     {
-        return $this->imageName;
+        $picture->setProduct(null);
+        $this->pictures->removeElement($picture);
     }
 
     /**
@@ -216,18 +215,19 @@ class Product
     }
 
     /**
-     * @return \DateTime
+     * @return mixed
      */
-    public function getUpdatedAt()
+    public function getDate()
     {
-        return $this->updatedAt;
+        return $this->date;
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param mixed $date
      */
-    public function setUpdatedAt($updatedAt)
+    public function setDate($date)
     {
-        $this->updatedAt = $updatedAt;
+        $this->date = $date;
     }
+
 }
