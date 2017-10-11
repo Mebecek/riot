@@ -1,0 +1,14 @@
+easy_admin:
+    entities:
+        Version:
+            class: AppBundle\Entity\Timer
+            label: 'Info'
+            show:
+                fields:
+                    - 'version'
+                    - 'timestamp'
+            list:
+                title: 'Current LoL version'
+                fields:
+                    - 'version'
+                    - 'timestamp'

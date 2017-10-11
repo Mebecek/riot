@@ -1,0 +1,22 @@
+easy_admin:
+    entities:
+        User:
+            class: AppBundle\Entity\User
+            label: 'Users'
+            password_encoding: { algorithm: 'bcrypt'}
+            show:
+                fields:
+                    - 'id'
+                    - 'email'
+                    - 'roles'
+            list:
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - 'username'
+                    - 'email'
+                    - 'roles'
+            edit:
+                title: '%%entity_label%% list'
+                fields:
+                    - 'email'

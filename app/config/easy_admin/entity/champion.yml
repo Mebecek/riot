@@ -1,0 +1,18 @@
+easy_admin:
+    entities:
+        Champion:
+            class: AppBundle\Entity\Champion
+            label: 'Champions'
+            show:
+                fields:
+                    - 'id'
+                    - 'championId'
+                    - 'name'
+                    - 'title'
+                    - { property: 'image', type: 'image', base_path: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' }
+            list:
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - 'championId'
+                    - 'name'

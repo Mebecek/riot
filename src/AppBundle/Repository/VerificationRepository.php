@@ -9,10 +9,10 @@
 namespace AppBundle\Repository;
 
 
-use AppBundle\Entity\Champion;
+use AppBundle\Entity\Verification;
 use Doctrine\ORM\Mapping;
 
-class ChampionRepository extends BaseRepository
+class VerificationRepository extends BaseRepository
 {
     public function __construct($em, Mapping\ClassMetadata $class)
     {
@@ -26,6 +26,6 @@ class ChampionRepository extends BaseRepository
 
     public function getRepository()
     {
-        return $this->_em->getRepository(Champion::class);
+        return $this->_em->getRepository(Verification::class);
     }
 }

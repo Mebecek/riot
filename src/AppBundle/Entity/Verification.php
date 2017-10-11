@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\entities
- * @ORM\Table(name="verification")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VerificationRepository")
+ * @ORM\Table()
  */
 class Verification
 {
@@ -25,30 +25,20 @@ class Verification
     private $id;
 
     /**
-     * @var User
-     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="user")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * @ORM\JoinColumn(referencedColumnName="id")
      */
     private $user;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $key;
+    private $verificationKey;
 
     /**
      * @ORM\Column(type="boolean")
      */
     private $verified;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     * @Assert\DateTime
-     */
-    private $verifiedAt;
 
     /**
      * @return mixed
@@ -85,22 +75,6 @@ class Verification
     /**
      * @return mixed
      */
-    public function getKey()
-    {
-        return $this->key;
-    }
-
-    /**
-     * @param mixed $key
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getVerified()
     {
         return $this->verified;
@@ -114,8 +88,21 @@ class Verification
         $this->verified = $verified;
     }
 
-    public function __construct()
+    /**
+     * @return mixed
+     */
+    public function getVerificationKey()
     {
-        $this->verifiedAt = new \DateTime();
+        return $this->verificationKey;
     }
+
+    /**
+     * @param mixed $verificationKey
+     */
+    public function setVerificationKey($verificationKey)
+    {
+        $this->verificationKey = $verificationKey;
+    }
+
+
 }

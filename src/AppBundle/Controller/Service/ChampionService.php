@@ -9,7 +9,6 @@
 namespace AppBundle\Controller\Service;
 use AppBundle\Controller\Classes\GuzzleHttpClient;
 use AppBundle\Repository\ChampionRepository;
-use Doctrine\ORM\EntityManager;
 use Psr\Log\InvalidArgumentException;
 use AppBundle\Entity\Champion;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -35,7 +34,6 @@ class ChampionService
      * Constructor
      * @param GuzzleHttpClient $guzzle
      * @param ContainerInterface $serviceContainer
-     * @param EntityManager $entityManager
      */
     public function __construct(GuzzleHttpClient $guzzle, ContainerInterface $serviceContainer, ChampionRepository $championRepository) {
         $this->guzzle = $guzzle;
@@ -47,7 +45,6 @@ class ChampionService
      * Retrieves all the champions
      *
      * @param $region string
-     * @param $freeToPlay boolean
      * @throws \Symfony\Component\CssSelector\Exception\InternalErrorException
      * @return array
      */

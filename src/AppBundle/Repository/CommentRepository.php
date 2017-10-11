@@ -8,9 +8,13 @@
 
 namespace AppBundle\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Champion;
+use Doctrine\ORM\Mapping;
 
-class CommentRepository extends EntityRepository
+class CommentRepository extends BaseRepository
 {
-
+    public function __construct($em, Mapping\ClassMetadata $class)
+    {
+        parent::__construct($em, $class);
+    }
 }
