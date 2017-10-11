@@ -32,15 +32,21 @@ class VerificationService
     private $tokenStorage;
 
     /**
+     * @var MasteriesService
+     */
+    private $masteriesService;
+
+    /**
      * Constructor
      * @param Generator $generator;
      * @param $verificationRepository $verificationRepository
      * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(Generator $generator, VerificationRepository $verificationRepository, TokenStorageInterface $tokenStorage) {
+    public function __construct(Generator $generator, VerificationRepository $verificationRepository, TokenStorageInterface $tokenStorage, MasteriesService $masteriesService) {
         $this->generator = $generator;
         $this->repository = $verificationRepository;
         $this->tokenStorage = $tokenStorage;
+        $this->masteriesService = $masteriesService;
     }
 
     /**
@@ -57,6 +63,28 @@ class VerificationService
             return $verify;
         }
         return $status;
+    }
+
+    public function checkVerification($summonerId, $region)
+    {
+        $masteries = $this->masteriesService->getMasteriesById($summonerId, $region);
+        $code = $this->getVerification();
+
+        foreach ($masteries as $mastery)
+        {
+            if ($mastery->getName() === $code->getVerificationKey())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function updateVerification($object)
+    {
+        $verification = $this->repository->getRepository()->find($object);
+        $verification->setVerified(true);
+        $this->repository->getEM()->flush();
     }
 
     /**

@@ -13,6 +13,7 @@ use AppBundle\Controller\Constant\Region;
 use AppBundle\Controller\Form\VerificationForm;
 use AppBundle\Controller\Service\ChampionService;
 use AppBundle\Controller\Service\MasteriesService;
+use AppBundle\Controller\Service\SummonerService;
 use AppBundle\Controller\Service\TimerService;
 use AppBundle\Controller\Service\VerificationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -61,10 +62,24 @@ class HomepageController extends Controller
     private $verificationService;
 
     /**
+     * @var SummonerService
+     */
+    private $summonerService;
+
+    /**
      * Constructor
      * @param ContainerInterface $serviceContainer
      */
-    public function __construct(ChampionService $championService,Generator $generator, TimerService $timer, EntityManager $em, MasteriesService $masteryService, FormFactoryInterface $formFactory, VerificationService $verificationService) {
+    public function __construct(
+        ChampionService $championService,
+        Generator $generator,
+        TimerService $timer,
+        EntityManager $em,
+        MasteriesService $masteryService,
+        FormFactoryInterface $formFactory,
+        VerificationService $verificationService,
+        SummonerService $summonerService
+    ) {
         $this->championService = $championService;
         $this->timer = $timer;
         $this->em = $em;
@@ -72,6 +87,7 @@ class HomepageController extends Controller
         $this->masteryService = $masteryService;
         $this->formFactory = $formFactory;
         $this->verificationService = $verificationService;
+        $this->summonerService = $summonerService;
     }
 
     /**
@@ -85,7 +101,7 @@ class HomepageController extends Controller
         $champions = $this->timer->checkTimer(Region::EUNE);
         dump($champions);
 
-        dump($this->masteryService->getMasteriesById(48533768, Region::EUNE));
+        dump($this->masteryService->getMasteriesById(35504770, Region::EUNE));
 
         dump($this->generator->getRandomString());
 
@@ -101,15 +117,23 @@ class HomepageController extends Controller
      */
     public function verifying(Request $request)
     {
-        dump($this->verificationService->getVerification());
         $form = $this->formFactory->create(VerificationForm::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $verification = $this->verificationService->getVerification();
 
+        if (!$verification->getVerified()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $summoner = $this->summonerService->getSummonerByName($form->get('nickname')->getData(), $form->get('region')->getData());
+
+                if ($this->verificationService->checkVerification($summoner->getSummonerId(), $form->get('region')->getData())) {
+                    $this->verificationService->updateVerification($verification);
+                }
+            }
         }
 
         return $this->render(':default:verify.html.twig', [
+            'verification' => $verification,
             'form' => $form->createView(),
             'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);

@@ -9,11 +9,28 @@
     </div>
     <div class="row">
         <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <center class="col-md-4">
+            {% if verification.verified == false %}
+            <p>
+                Put this code as the name of one of your mastery or rune tabs in your LoL client.
+                Once you have saved the new title, enter your summoner name, choose region and click the verify button below.
+                Note: You can change your mastery tab name back any time after you have successfully been
+                verified, it is a one time process.
+            </p>
+            <div class="form-group">
+                <label class="control-label required" for="verification_form_nickname">Code</label>
+                <input class="form-control" type="text" value="{{ verification.verificationKey }}"/>
+            </div>
+            <br>
             {{ form_start(form) }}
             {{ form_row(form.nickname) }}
+            {{ form_row(form.region) }}
             <button type="submit" class="btn btn-success">Verify</button>
             {{ form_end(form) }}
+            {% endif %}
+            <p>
+                Your account has been successfully verified!
+            </p>
         </div>
         <div class="col-md-4"></div>
     </div>

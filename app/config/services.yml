@@ -48,10 +48,10 @@ services:
         - AppBundle\Entity\Comment
 
     AppBundle\Repository\VerificationRepository:
-          class: AppBundle\Repository\VerificationRepository
-          factory: ['@doctrine.orm.default_entity_manager', 'getRepository']
-          arguments:
-            - AppBundle\Entity\Verification
+      class: AppBundle\Repository\VerificationRepository
+      factory: ['@doctrine.orm.default_entity_manager', 'getRepository']
+      arguments:
+        - AppBundle\Entity\Verification
 
     champion.repository:
       class: AppBundle\Repository\ChampionRepository
