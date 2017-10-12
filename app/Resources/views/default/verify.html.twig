@@ -27,10 +27,11 @@
             {{ form_row(form.region) }}
             <button type="submit" class="btn btn-success">Verify</button>
             {{ form_end(form) }}
+            {% else %}
+                <p>
+                    Your account has been successfully verified!
+                </p>
             {% endif %}
-            <p>
-                Your account has been successfully verified!
-            </p>
         </div>
         <div class="col-md-4"></div>
     </div>

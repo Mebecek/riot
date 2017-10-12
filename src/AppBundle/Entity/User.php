@@ -36,7 +36,6 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string")
      */
     private $nickname;
@@ -56,6 +55,11 @@ class User implements UserInterface
      * @ORM\Column(type="json_array")
      */
     private $roles = array();
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Verification", mappedBy="user")
+     */
+    private $verification;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="author")

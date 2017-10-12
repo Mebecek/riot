@@ -30,6 +30,7 @@ class UserController extends Controller
         {
             /** @var User $user */
             $user = $form->getData();
+            $user->setNickname("");
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
