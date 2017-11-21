@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 18. 7. 2017
- * Time: 10:30
- */
 
 namespace AppBundle\Controller;
-
 
 use AppBundle\Controller\Form\UserRegistrationForm;
 use AppBundle\Entity\User;

@@ -3,11 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Controller\Form\CommentForm;
+use AppBundle\Repository\CommentRepository;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\Product;
-use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

@@ -3,12 +3,13 @@ easy_admin:
         Version:
             class: AppBundle\Entity\Timer
             label: 'Info'
+            disabled_actions: ['new', 'delete']
             show:
                 fields:
                     - 'version'
                     - 'timestamp'
             list:
-                title: 'Current LoL version'
+                title: 'Last update information'
                 fields:
                     - 'version'
-                    - 'timestamp'
+                    - { property: 'timestamp', type: datetime }

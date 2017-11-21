@@ -8,40 +8,70 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-
+/**
+ * Summoner
+ *
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SummonerRepository")
+ * @ORM\Table()
+ */
 class Summoner
 {
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="summoner_id", type="integer")
      */
     private $summonerId;
 
     /**
      * @var integer
      *
+     * @ORM\Column(name="account_id", type="integer")
      */
     private $accountId;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string")
      */
     private $name;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="profile_icon_id", type="integer")
      */
     private $profileIconId;
 
     /**
      * @var float
+     *
+     * @ORM\Column(name="revision_date", type="float")
      */
     private $revisionDate;
 
     /**
      * $var integer
+     *
+     * @ORM\Column(name="summoner_level", type="integer")
      */
     private $summonerLevel;
 

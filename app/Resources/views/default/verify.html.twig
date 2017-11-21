@@ -1,39 +1,85 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blogas{% endblock %}
-{% block body %}
+{% block title %}
+    Verify yourself
+{% endblock %}
 
-    <div class="jumbotron text-center">
-        <h1>Homepage</h1>
-        <p>Resize this responsive page to see the effect!</p>
-    </div>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <center class="col-md-4">
-            {% if verification.verified == false %}
-            <p>
-                Put this code as the name of one of your mastery or rune tabs in your LoL client.
-                Once you have saved the new title, enter your summoner name, choose region and click the verify button below.
-                Note: You can change your mastery tab name back any time after you have successfully been
-                verified, it is a one time process.
-            </p>
-            <div class="form-group">
-                <label class="control-label required" for="verification_form_nickname">Code</label>
-                <input class="form-control" type="text" value="{{ verification.verificationKey }}"/>
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Settings</h2>
+        <p class="lead">Change your password or verify yourself throught settings!</p>
+
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
+                    <li class="active"><a href="#vtab1" data-toggle="tab">Profile</a></li>
+                    <li><a href="#vtab2" data-toggle="tab">Settings</a></li>
+                    <li><a href="#vtab3" data-toggle="tab">Verification</a></li>
+                </ul>
             </div>
-            <br>
-            {{ form_start(form) }}
-            {{ form_row(form.nickname) }}
-            {{ form_row(form.region) }}
-            <button type="submit" class="btn btn-success">Verify</button>
-            {{ form_end(form) }}
-            {% else %}
-                <p>
-                    Your account has been successfully verified!
-                </p>
-            {% endif %}
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="vtab1">
+                        <h3>Information <small>optional</small></h3>
+
+                        <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-tabs-horizontal">
+                            <li class="active"><a href="#htab1" data-toggle="tab">Change password</a></li>
+                            <li><a href="#htab2" data-toggle="tab">Tab 2</a></li>
+                            <li><a href="#htab3" data-toggle="tab">Tab 3</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="htab1">
+                                <span>lel</span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="htab2">
+                                <h3>Tab 2</h3>
+                                <p> Mauris imperdiet dignissim ante, in efficitur mauris elementum sed. Cras vulputate malesuada magna. Morbi tincidunt eros a dui cursus, vitae dignissim nulla scelerisque. Duis pharetra scelerisque mi vel luctus. Cras eu purus efficitur, blandit nisi id, fringilla nulla.</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade in" id="htab3">
+                                <h3>Tab 3</h3>
+                                <p>Etiam id pharetra quam. Morbi tristique nunc vel sapien dapibus, sit amet imperdiet quam venenatis. Vestibulum et suscipit urna. Suspendisse volutpat quis est eu volutpat. Nulla non tortor venenatis turpis congue aliquet. Vivamus at elit vel massa elementum tempor sit amet sed odio. Nullam placerat, arcu sed ullamcorper ornare, erat erat placerat quam, in feugiat nulla purus in nunc. Maecenas vitae erat auctor, aliquam tellus et, vulputate eros.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="vtab2">
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in" id="vtab3">
+                        {% if verification.verified == false %}
+                            <p>
+                                Put this code as the name of one of your mastery or rune tabs in your LoL client.
+                                Once you have saved the new title, enter your summoner name, choose region and click the verify button below.
+                                Note: You can change your mastery tab name back any time after you have successfully been
+                                verified, it is a one time process.
+                            </p>
+                            <div class="row">
+                                {{ form_start(form) }}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label required" for="verification_form_nickname">Code</label>
+                                        <input class="form-control" type="text" value="{{ verification.verificationKey }}"/>
+                                        {{ form_row(form.region) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form_row(form.nickname) }}
+                                    <button type="submit" class="btn btn-success">Verify</button>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success">
+                                <i class="fa fa-check-square-o" aria-hidden="true"></i> Your account has been successfully verified!
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4"></div>
     </div>
 {% endblock %}
 

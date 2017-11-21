@@ -16,7 +16,7 @@ class FileUploader
     {
         $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
-        $file->move(__DIR__.'//../../../../../../web/uploads/images', $fileName);
+        $file->move(__DIR__ . '//../../../../../../web/uploads/images', $fileName);
 
         return $fileName;
     }

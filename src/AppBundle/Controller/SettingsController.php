@@ -1,25 +1,49 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 19. 7. 2017
- * Time: 9:16
- */
 
 namespace AppBundle\Controller;
 
-
 use AppBundle\Controller\Form\ChangePasswordForm;
-use AppBundle\Entity\User;
+use AppBundle\Controller\Form\VerificationForm;
+use AppBundle\Controller\Service\SummonerService;
+use AppBundle\Controller\Service\VerificationService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class SettingsController extends Controller
 {
     /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
+     * @var VerificationService
+     */
+    private $verificationService;
+
+    /**
+     * @var SummonerService
+     */
+    private $summonerService;
+
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        VerificationService $verificationService,
+        SummonerService $summonerService
+    ) {
+        $this->formFactory = $formFactory;
+        $this->verificationService = $verificationService;
+        $this->summonerService = $summonerService;
+    }
+
+    /**
      * @Route("/settings", name="settings")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function settingsAction()
     {
@@ -29,7 +53,8 @@ class SettingsController extends Controller
     }
 
     /**
-     * @Route("settings/changepassword", name="changepassword")
+     * @Route("settings/changepassword", name="settings_changepassword")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function changepasswordAction(Request $request, UserPasswordEncoderInterface $encoder)
     {
@@ -54,5 +79,33 @@ class SettingsController extends Controller
                 'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
                 'form' => $form->createView()
             ]);
+    }
+
+    /**
+     * @Route("/settings/verify", name="settings_verify")
+     * @Security("is_granted('ROLE_USER')")
+     */
+    public function verifyAction(Request $request)
+    {
+        $form = $this->formFactory->create(VerificationForm::class);
+        $form->handleRequest($request);
+
+        $verification = $this->verificationService->getVerification();
+
+        if (!$verification->getVerified()) {
+            if ($form->isSubmitted() && $form->isValid()) {
+                $summoner = $this->summonerService->getSummonerByName($form->get('nickname')->getData(), $form->get('region')->getData());
+
+                if ($this->verificationService->checkVerification($summoner->getSummonerId(), $form->get('region')->getData())) {
+                    $this->verificationService->updateVerification($verification);
+                }
+            }
+        }
+
+        return $this->render(':default:verify.html.twig', [
+            'verification' => $verification,
+            'form' => $form->createView(),
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+        ]);
     }
 }

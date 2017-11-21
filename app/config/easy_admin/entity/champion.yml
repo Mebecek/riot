@@ -10,9 +10,20 @@ easy_admin:
                     - 'name'
                     - 'title'
                     - { property: 'image', type: 'image', base_path: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' }
+                    - 'tags'
             list:
+                sort: ['championId', 'DESC']
                 title: '%%entity_label%% list'
                 fields:
                     - 'id'
                     - 'championId'
                     - 'name'
+            edit:
+                fields:
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Identificator' }
+                    - 'id'
+                    - 'championId'
+                    - { type: 'group', css_class: 'col-sm-6', label: 'Champion information' }
+                    - 'name'
+                    - 'title'
+                    - 'tags'

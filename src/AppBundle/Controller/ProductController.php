@@ -1,28 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 24. 7. 2017
- * Time: 14:16
- */
 
 namespace AppBundle\Controller;
 
-use AppBundle\Controller\Form\ArticleForm;
-use AppBundle\Entity\Article;
-use AppBundle\Entity\Comment;
+use AppBundle\Controller\Service\FileUploader;
+use AppBundle\Entity\Product;
 use AppBundle\Entity\ProductPicture;
-use AppBundle\Entity\User;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\CommentBundle\Tests\Functional\Bundle\CommentBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Product;
 use AppBundle\Controller\Form\ProductType;
-use AppBundle\Controller\Service\FileUploader;
-use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {

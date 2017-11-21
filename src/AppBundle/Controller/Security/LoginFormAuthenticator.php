@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 13. 7. 2017
- * Time: 20:28
- */
 
 namespace AppBundle\Controller\Security;
 
-
-use AppBundle\Form\LoginForm;
+use AppBundle\Controller\Form\LoginForm;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Security;
@@ -34,55 +27,43 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         $this->router = $router;
         $this->passwordEncoder = $passwordEncoder;
     }
-
     public function getCredentials(Request $request)
     {
         $isLoginSubmit = $request->getPathInfo() == '/login' && $request->isMethod('POST');
-
         if (!$isLoginSubmit)
         {
             return;
         }
-
-        $form = $this->formFactory->create(\AppBundle\Controller\Form\LoginForm::class);
+        $form = $this->formFactory->create(LoginForm::class);
         $form->handleRequest($request);
-
         $data = $form->getData();
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $data['_username']
         );
-
         return $data;
     }
-
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $username = $credentials['_username'];
-
         return $this->em->getRepository('AppBundle:User')
             ->findOneBy(['email' => $username]);
     }
-
     public function checkCredentials($credentials, UserInterface $user)
     {
         $password = $credentials['_password'];
-
         if ($this->passwordEncoder->isPasswordValid($user, $password))
         {
             return true;
         }
         return false;
     }
-
     protected function getLoginUrl()
     {
         return $this->router->generate('security_login');
     }
-
     protected function getDefaultSuccessRedirectUrl()
     {
         return $this->router->generate('home');
     }
-
 }

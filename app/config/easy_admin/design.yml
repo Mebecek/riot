@@ -1,0 +1,15 @@
+easy_admin:
+    design:
+        brand_color: '#4C0000'
+        form_theme: 'vertical'
+        menu:
+            - { label: 'Controll' }
+            - { entity: 'User', label: 'Users', icon: 'user' }
+            - { entity: 'Champion', label: 'Champions', icon: 'fa fa-address-book' }
+            - { entity: 'Verification', label: 'Verification', icon: 'fa fa-id-card-o' }
+
+            - { label: 'Static pages' }
+            - { label: 'Homepage', icon: 'fa fa-home', route: 'home', target: '_blank' }
+
+            - { label: 'Info' }
+            - { entity: 'Version', label: 'Info', icon: 'info' }

@@ -7,6 +7,7 @@
  */
 
 namespace AppBundle\Controller\Service;
+
 use AppBundle\Controller\Classes\GuzzleHttpClient;
 use AppBundle\Repository\ChampionRepository;
 use Psr\Log\InvalidArgumentException;
@@ -16,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ChampionService
 {
     /**
-     * @var \AppBundle\Controller\Classes\GuzzleHttpClient
+     * @var GuzzleHttpClient
      */
     private $guzzle;
 
@@ -48,7 +49,7 @@ class ChampionService
      * @throws \Symfony\Component\CssSelector\Exception\InternalErrorException
      * @return array
      */
-    public function getChampions($region, $tags = 'image')
+    public function getChampions($region, $tags = 'all')
     {
         $request = $this->serviceContainer->getParameter('champions');
 
@@ -150,6 +151,14 @@ class ChampionService
         $champion->setName($object->name);
         $champion->setTitle($object->title);
         $champion->setImage($object->image->full);
+        $champion->setAllyTips($object->allytips);
+        $champion->setTags($object->tags);
+        $champion->setSkins($object->skins);
+        $champion->setItems($object->recommended);
+        $champion->setLore($object->lore);
+        $champion->setPassive($object->passive->image->full);
+        $champion->setSpells($object->spells);
+        $champion->setStats($object->info);
         return $champion;
     }
 

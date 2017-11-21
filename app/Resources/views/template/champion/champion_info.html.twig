@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Find summoner
+{% endblock %}
+
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="well">
+                    <p><b>Stats</b></p>
+                    <div style="display: inline-block; width: 100%">
+                        <span>Attack: </span>
+                        <div class="champion-stats">
+                            <span style="width: {{ champion.stats[0] }}0%; display: block; margin: 5px; margin-left: 0px;" class="label label-danger champion-stats-stat"><b>{{ champion.stats[0] }}/10</b></span>
+                        </div>
+                        <span>Defense: </span>
+                        <div class="champion-stats">
+                            <span style="width: {{ champion.stats[1] }}0%; display: block; margin: 5px; margin-left: 0px;" class="label label-primary"><b>{{ champion.stats[1] }}/10</b></span>
+                        </div>
+                        <span>Magic: </span>
+                        <div class="champion-stats">
+                            <span style="width: {{ champion.stats[2] }}0%; display: block; margin: 5px; margin-left: 0px;" class="label label-warning"><b>{{ champion.stats[2] }}/10</b></span>
+                        </div>
+                        <span>Difficulty: </span>
+                        <div class="champion-stats">
+                            <span style="width: {{ champion.stats[3] }}0%; display: block; margin: 5px; margin-left: 0px;" class="label label-default"><b>{{ champion.stats[3] }}/10</b></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="well">
+                    <p><b>Skins</b> <small><i>Click on each skin to view it</i></small></p>
+                    {% for skin in champion.skins %}
+                        <div class="champion-skin">
+                            <span class="label label-danger champion-skin-label"><b>{{ skin.name }}</b></span>
+                            <input class="champion-url" type="hidden" value="{{ asset('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/') }}{{ champion.image|replace({".png":""}) }}_{{ skin.num }}.jpg" />
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="well">
+                    <p><b>Tags</b></p>
+                    {% for tag in champion.tags %}
+                        <span class="label label-danger"><b>#{{ tag }}</b></span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-sm-9">
+                {% for skin in champion.skins %}
+                    {% if skin.num == 0 %}
+                        <div class="champion-preview" style="background-image: url({{ asset('http://ddragon.leagueoflegends.com/cdn/img/champion/splash/') }}{{ champion.image|replace({".png":""}) }}_{{ skin.num }}.jpg);">
+                            <div class="champion-splash">
+                                <h2>{{ champion.name }}</h2>
+                                <p class="lead">{{ champion.title }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="well">
+                    <img class="champion-passive" src="{{ dragonData[4] }}{{ champion.passive }}" />
+
+                    {% for spells in champion.spells %}
+                        <img class="champion-spell" src="{{ dragonData[2] }}{{ spells.image.full }}" />
+                        <div class="champion-spell-info well">
+                            <p><b>{{ spells.name }}</b></p>
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        <span>Cost: </span>
+                                    </td>
+                                    {% for cost in spells.cost %}
+                                        <td>
+                                            <span>[{{ cost }}]</span>
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <span>{{ spells.costType }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Cooldown: </span>
+                                    </td>
+                                    {% for cooldown in spells.cooldown %}
+                                        <td>
+                                            <span>[{{ cooldown }}]</span>
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <span>seconds</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p><b>{{ spells.description }}</b></p>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="well">
+                    <p>{{ champion.lore|raw }}</p>
+                </div>
+
+                <h3>{{ champion.name }} build guide</h3>
+                <p class="lead custom-paragraph">what to build on {{ champion.name }}</p>
+                <hr>
+
+                <div class="row">
+                        {% for object in champion.items %}
+                            {% if object.map == "SR" and object.mode == "CLASSIC" %}
+                                {% for block in object.blocks %}
+                                    <div class="col-sm-6">
+                                        <div class="well">
+                                            <h4>{{ block.type }} items</h4>
+                                            {% for item in block.items %}
+                                                <img style="display: inline-block; border: 2px solid black; border-radius: 10px;" width="45px" src="{{ dragonData[3] }}{{ item.id }}.png" />
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/skin-picker.js') }}"></script>
+    <script src="{{ asset('js/pointer.js') }}"></script>
+{% endblock %}

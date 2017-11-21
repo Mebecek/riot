@@ -1,67 +1,52 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Blog{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="index, follow">
+    <link rel="manifest" href="{{ asset('css/style.css') }}">
+    <meta name="format-detection" content="telephone=no">
 
-            <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
-            <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-        {% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block menu %}
-            <nav class="navbar navbar-default navbar-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="{{ path('home') }}">Blog</a>
-                    </div>
-                    <div id="navbar" class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="{% if app.request.attributes.get('_route') == 'user_register' %}active{% endif %}">
-                                <a href="{{ path('user_register') }}">Register</a>
-                            </li>
-                            <li class="{% if app.request.attributes.get('_route') == 'article' %}active{% endif %}">
-                                <a href="{{ path('article') }}">Articles</a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            {% if is_granted('ROLE_USER') %}
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user ? app.user.email}} <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="{{ path('changepassword') }}">Settings</a></li>
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                            <li><a href="{{ path('admin') }}" target="_blank">Admin panel</a></li>
-                                        {% endif %}
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="{{ path('security_logout') }}">Logout</a></li>
-                                    </ul>
-                                </li>
-                            {% else %}
-                                <li class="{% if app.request.attributes.get('_route') == 'login' %}active{% endif %}">
-                                    <a href="{{ path('security_login') }}">{{ app.user ? app.user.email : 'Login' }}</a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </nav>
-        {% endblock %}
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        {% endblock %}
-    </body>
+    <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+
+    {% block socials %}
+        <meta property="og:title" content="">
+        <meta property="og:description" name="description" content="">
+        <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}{{ path('home') }}">
+        <meta property="og:site_name" content="LolFindYou">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="{{ app.request.locale }}_{{ app.request.locale|upper }}">
+        <meta name="twitter:card" content="summary_large_image">
+    {% endblock %}
+
+    <link rel="author" href="https://nostools.cz">
+
+    <title>LolFindYou - {% block title %}{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/menu/menu.css') }}">
+    {% endblock %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+
+{% block header %}
+    {{ include('header.html.twig') }}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+    {{ include('footer.html.twig') }}
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
 </html>

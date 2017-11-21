@@ -21,6 +21,10 @@ security:
                   - app.security.login_form_authenticator
             logout:
                 path: /logout
+            remember_me:
+                secret:   'neco'
+                lifetime: 604800
+                path:     /
 
             switch_user: ~
     access_control:

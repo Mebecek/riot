@@ -8,11 +8,8 @@
 
 namespace AppBundle\Controller\Service;
 
-
-use AppBundle\Controller\Constant\Region;
 use AppBundle\Entity\Timer;
 use Doctrine\ORM\EntityManager;
-use Psr\Container\ContainerInterface;
 
 class TimerService
 {
@@ -70,6 +67,8 @@ class TimerService
         if ($repository == null)
         {
             $this->saveTimer($this->createTimer($region, time()));
+            $this->championService->deleteChampions();
+            $this->championService->getChampions($region);
         } else {
             foreach ($repository as $rep)
             {

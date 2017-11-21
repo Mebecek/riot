@@ -1,19 +1,40 @@
 # This file is a "template" of what your parameters.yml file should look like
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+# This file is auto-generated during the composer install
 parameters:
-    database_host: 127.0.0.1
-    database_port: ~
-    database_name: symfony
+    database_host: localhost
+    database_port: null
+    database_name: test_project
     database_user: root
-    database_password: ~
-    # You should uncomment this if you want to use pdo_sqlite
-    #database_path: '%kernel.project_dir%/var/data/data.sqlite'
-
+    database_password: xx666h3ll
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: ~
-    mailer_password: ~
+    mailer_user: null
+    mailer_password: null
+    secret: e90d5e920f6a059e719765b9239851e9125718e0
+
+    key: RGAPI-4e3286dc-ba72-4bc0-8aee-42863496046a
+
+    urls:
+        br: https://br1.api.riotgames.com
+        eune: https://eun1.api.riotgames.com
+        euw: https://euw1.api.riotgames.com
+        kr: https://kr.api.riotgames.com
+        las: https://la2.api.riotgames.com
+        lan: https://la1.api.riotgames.com
+        na: https://na1.api.riotgames.com
+        oce: https://oc1.api.riotgames.com
+        tr: https://tr1.api.riotgames.com
+        ru: https://ru.api.riotgames.com
+
+    championById: /lol/static-data/v3/champions/{id}
+    champions: /lol/static-data/v3/champions
+
+    masterie:
+        masteries: /lol/platform/v3/masteries/by-summoner/{id}
+
+    summonerByName: /lol/summoner/v3/summoners/by-name/{name}
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt

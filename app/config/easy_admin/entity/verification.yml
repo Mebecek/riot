@@ -1,0 +1,26 @@
+easy_admin:
+    entities:
+        Verification:
+            class: AppBundle\Entity\Verification
+            label: 'Verification'
+            show:
+                fields:
+                    - 'id'
+                    - 'user'
+                    - { property: 'user.nickname', label: 'User nickname' }
+                    - 'verificationKey'
+                    - 'verified'
+            list:
+                help: 'The list of verified/unverified users do not change any of data bellow if not required'
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - 'user'
+                    - 'verificationKey'
+                    - 'verified'
+            edit:
+                fields:
+                    - 'id'
+                    - 'user'
+                    - 'verificationKey'
+                    - 'verified'

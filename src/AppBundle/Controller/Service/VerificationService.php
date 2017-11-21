@@ -10,7 +10,7 @@ namespace AppBundle\Controller\Service;
 
 use AppBundle\Controller\Classes\Generator;
 use AppBundle\Entity\Verification;
-use AppBundle\Repository\ChampionRepository;
+use AppBundle\Repository\SummonerRepository;
 use AppBundle\Repository\VerificationRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -37,21 +37,32 @@ class VerificationService
     private $masteriesService;
 
     /**
+     * @var SummonerRepository
+     */
+    private $summonerRepository;
+
+    /**
      * Constructor
      * @param Generator $generator;
      * @param $verificationRepository $verificationRepository
      * @param TokenStorageInterface $tokenStorage
+     * @param MasteriesService $masteriesService
+     * @param SummonerRepository $summonerRepository
      */
-    public function __construct(Generator $generator, VerificationRepository $verificationRepository, TokenStorageInterface $tokenStorage, MasteriesService $masteriesService) {
+    public function __construct(
+        Generator $generator,
+        VerificationRepository $verificationRepository,
+        TokenStorageInterface $tokenStorage,
+        MasteriesService $masteriesService,
+        SummonerRepository $summonerRepository)
+    {
         $this->generator = $generator;
         $this->repository = $verificationRepository;
         $this->tokenStorage = $tokenStorage;
         $this->masteriesService = $masteriesService;
+        $this->summonerRepository = $summonerRepository;
     }
 
-    /**
-     * @return Verification
-     */
     public function getVerification()
     {
         $status = $this->repository->getRepository()->findOneBy(['user' => $this->tokenStorage->getToken()->getUser()]);
@@ -83,6 +94,8 @@ class VerificationService
     public function updateVerification($object)
     {
         $verification = $this->repository->getRepository()->find($object);
+        //$user = $this->summonerRepository->getRepository()->find($this->tokenStorage->getToken()->getUser());
+        //$user->setNickname($user);
         $verification->setVerified(true);
         $this->repository->getEM()->flush();
     }

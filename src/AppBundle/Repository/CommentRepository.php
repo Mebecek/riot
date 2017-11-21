@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 27. 7. 2017
- * Time: 13:20
- */
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Champion;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
 
-class CommentRepository extends BaseRepository
+class CommentRepository extends EntityRepository
 {
     public function __construct($em, Mapping\ClassMetadata $class)
     {

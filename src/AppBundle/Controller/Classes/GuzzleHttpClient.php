@@ -64,6 +64,14 @@ class GuzzleHttpClient
             case 503:
                 throw new ServiceUnavailableHttpException();
                 break;
+            default:
+                $limit = explode(":", $response->getHeaderLine('X-Method-Rate-Limit'));
+                $current = explode(":", $response->getHeaderLine('X-Method-Rate-Limit-Count'));
+                if (($limit[0] - $current[0]) < 1)
+                {
+                    throw new TooManyRequestsHttpException();
+                }
+                dump($limit[0], $current[0]);
         }
 
         return json_decode($response->getBody());

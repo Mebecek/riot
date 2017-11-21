@@ -8,9 +8,8 @@
 
 namespace AppBundle\Controller\Service;
 
-
-use AppBundle\Controller\guzzleClient\GuzzleHttpClient;
 use AppBundle\Entity\Masteries;
+use AppBundle\Controller\Classes\GuzzleHttpClient;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -18,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class MasteriesService
 {
     /**
-     * @var \AppBundle\Controller\Classes\GuzzleHttpClient
+     * @var GuzzleHttpClient
      */
     private $guzzle;
 
@@ -34,11 +33,11 @@ class MasteriesService
 
     /**
      * Constructor
-     * @param \AppBundle\Controller\Classes\GuzzleHttpClient $guzzle
+     * @param GuzzleHttpClient $guzzle
      * @param ContainerInterface $serviceContainer
      * @param EntityManager $entityManager
      */
-    public function __construct(\AppBundle\Controller\Classes\GuzzleHttpClient $guzzle, ContainerInterface $serviceContainer, EntityManager $entityManager) {
+    public function __construct(GuzzleHttpClient $guzzle, ContainerInterface $serviceContainer, EntityManager $entityManager) {
         $this->guzzle = $guzzle;
         $this->serviceContainer = $serviceContainer;
         $this->entityManager = $entityManager;

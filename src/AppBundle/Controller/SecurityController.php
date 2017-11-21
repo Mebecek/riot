@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 13. 7. 2017
- * Time: 19:43
- */
 
 namespace AppBundle\Controller;
 
 use AppBundle\Controller\Form\LoginForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SecurityController extends Controller
 {
@@ -31,7 +24,7 @@ class SecurityController extends Controller
         ]);
 
         return $this->render(
-            'form/login.html.twig',
+            ':template/login:login.html.twig',
             [
                 'form' => $form->createView(),
                 'error' => $error,

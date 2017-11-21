@@ -9,10 +9,8 @@
 namespace AppBundle\Controller\Form;
 
 use AppBundle\Controller\Constant\Region;
-use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class VerificationForm extends AbstractType

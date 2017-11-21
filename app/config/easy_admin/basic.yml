@@ -1,0 +1,5 @@
+easy_admin:
+    site_name: 'Admin Panel'
+    formats:
+        date: 'd.m.Y'
+        datetime: 'd/m/Y h:i A e'

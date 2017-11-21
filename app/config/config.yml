@@ -8,6 +8,9 @@ imports:
     - { resource: easy_admin/entity/champion.yml }
     - { resource: easy_admin/entity/version.yml }
     - { resource: easy_admin/entity/user.yml }
+    - { resource: easy_admin/entity/verification.yml }
+    - { resource: easy_admin/basic.yml }
+    - { resource: easy_admin/design.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

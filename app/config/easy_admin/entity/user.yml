@@ -13,10 +13,13 @@ easy_admin:
                 title: '%%entity_label%% list'
                 fields:
                     - 'id'
-                    - 'username'
                     - 'email'
+                    - 'nickname'
                     - 'roles'
             edit:
                 title: '%%entity_label%% list'
                 fields:
                     - 'email'
+                    - 'email'
+                    - 'nickname'
+                    - 'roles'
