@@ -20,53 +20,38 @@ class VerificationService
      * @var Generator
      */
     private $generator;
-
     /**
      * @var VerificationRepository
      */
     private $repository;
-
     /**
      * @var TokenStorageInterface
      */
     private $tokenStorage;
-
-    /**
-     * @var MasteriesService
-     */
-    private $masteriesService;
-
     /**
      * @var SummonerRepository
      */
     private $summonerRepository;
-
     /**
      * Constructor
      * @param Generator $generator;
      * @param $verificationRepository $verificationRepository
      * @param TokenStorageInterface $tokenStorage
-     * @param MasteriesService $masteriesService
      * @param SummonerRepository $summonerRepository
      */
     public function __construct(
         Generator $generator,
         VerificationRepository $verificationRepository,
         TokenStorageInterface $tokenStorage,
-        MasteriesService $masteriesService,
-        SummonerRepository $summonerRepository)
-    {
+        SummonerRepository $summonerRepository
+    ) {
         $this->generator = $generator;
         $this->repository = $verificationRepository;
-        $this->tokenStorage = $tokenStorage;
-        $this->masteriesService = $masteriesService;
         $this->summonerRepository = $summonerRepository;
     }
-
     public function getVerification()
     {
         $status = $this->repository->getRepository()->findOneBy(['user' => $this->tokenStorage->getToken()->getUser()]);
-
         if (!$status)
         {
             $verify = $this->createVerification();
@@ -74,21 +59,6 @@ class VerificationService
             return $verify;
         }
         return $status;
-    }
-
-    public function checkVerification($summonerId, $region)
-    {
-        $masteries = $this->masteriesService->getMasteriesById($summonerId, $region);
-        $code = $this->getVerification();
-
-        foreach ($masteries as $mastery)
-        {
-            if ($mastery->getName() === $code->getVerificationKey())
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     public function updateVerification($object)
@@ -99,7 +69,6 @@ class VerificationService
         $verification->setVerified(true);
         $this->repository->getEM()->flush();
     }
-
     /**
      * Create a champion
      *
@@ -113,7 +82,6 @@ class VerificationService
         $verification->setVerified(false);
         return $verification;
     }
-
     /**
      * @param $verification
      */

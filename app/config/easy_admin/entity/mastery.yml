@@ -1,0 +1,28 @@
+easy_admin:
+    entities:
+        Mastery:
+            class: FindSummonerBundle\Model\Entity\Mastery
+            label: 'Mastery'
+            show:
+                fields:
+                    - 'id'
+                    - 'player'
+                    - 'championId'
+                    - 'championPoints'
+                    - { property: 'lastPlayTime', type: datetime }
+            list:
+                sort: ['lastPlayTime', 'ASC']
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - 'player'
+                    - 'championId'
+                    - 'championPoints'
+                    - { property: 'lastPlayTime', type: datetime }
+            edit:
+                fields:
+                    - 'id'
+                    - 'player'
+                    - 'championId'
+                    - 'championPoints'
+                    - { property: 'lastPlayTime', type: datetime }

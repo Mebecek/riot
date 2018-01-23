@@ -5,8 +5,13 @@ easy_admin:
         menu:
             - { label: 'Controll' }
             - { entity: 'User', label: 'Users', icon: 'user' }
-            - { entity: 'Champion', label: 'Champions', icon: 'fa fa-address-book' }
             - { entity: 'Verification', label: 'Verification', icon: 'fa fa-id-card-o' }
+
+            - { label: 'RIOT API' }
+            - { entity: 'Champion', label: 'Champions', icon: 'fa fa-address-book' }
+            - { entity: 'Summoner', label: 'Summoner', icon: 'child' }
+            - { entity: 'SummonerLeague', label: 'Summoner League', icon: 'bookmark' }
+            - { entity: 'Mastery', label: 'Mastery', icon: 'area-chart' }
 
             - { label: 'Static pages' }
             - { label: 'Homepage', icon: 'fa fa-home', route: 'home', target: '_blank' }

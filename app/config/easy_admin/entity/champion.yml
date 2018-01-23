@@ -1,7 +1,8 @@
 easy_admin:
     entities:
         Champion:
-            class: AppBundle\Entity\Champion
+            class: ChampionBundle\Model\Entity\Champion
+            disabled_actions: ['edit']
             label: 'Champions'
             show:
                 fields:

@@ -25,55 +25,72 @@ class Summoner
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $user;
+    protected $id;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="summoner_id", type="integer")
      */
-    private $summonerId;
+    protected $summonerId;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="account_id", type="integer")
      */
-    private $accountId;
+    protected $accountId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="region", type="string", nullable=true)
+     */
+    protected $region;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string")
      */
-    private $name;
+    protected $name;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="profile_icon_id", type="integer")
      */
-    private $profileIconId;
+    protected $profileIconId;
 
     /**
      * @var float
      *
      * @ORM\Column(name="revision_date", type="float")
      */
-    private $revisionDate;
+    protected $revisionDate;
 
     /**
      * $var integer
      *
      * @ORM\Column(name="summoner_level", type="integer")
      */
-    private $summonerLevel;
+    protected $summonerLevel;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return int
@@ -140,6 +157,22 @@ class Summoner
     }
 
     /**
+     * @return float
+     */
+    public function getRevisionDate(): float
+    {
+        return $this->revisionDate;
+    }
+
+    /**
+     * @param float $revisionDate
+     */
+    public function setRevisionDate(float $revisionDate)
+    {
+        $this->revisionDate = $revisionDate;
+    }
+
+    /**
      * @return mixed
      */
     public function getSummonerLevel()
@@ -156,19 +189,18 @@ class Summoner
     }
 
     /**
-     * @return float
+     * @return string
      */
-    public function getRevisionDate(): float
+    public function getRegion(): string
     {
-        return $this->revisionDate;
+        return $this->region;
     }
 
     /**
-     * @param float $revisionDate
+     * @param string $region
      */
-    public function setRevisionDate(float $revisionDate)
+    public function setRegion(string $region)
     {
-        $this->revisionDate = $revisionDate;
+        $this->region = $region;
     }
-
 }

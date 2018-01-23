@@ -16,11 +16,13 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
+            new ChampionBundle\ChampionBundle(),
+            new FindSummonerBundle\FindSummonerBundle(),
             new EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle,
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-
+            new FOS\UserBundle\FOSUserBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -6,3 +6,14 @@ easy_admin_bundle:
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+champion_bundle:
+    resource: '@ChampionBundle/Controller/'
+    type: annotation
+
+find_summoner_bundle:
+    resource: '@FindSummonerBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

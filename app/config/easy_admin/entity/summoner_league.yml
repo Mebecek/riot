@@ -1,0 +1,24 @@
+easy_admin:
+    entities:
+        SummonerLeague:
+            disabled_actions: ['edit']
+            class: FindSummonerBundle\Model\Entity\SummonerLeague
+            label: 'Summoner League'
+            show:
+                fields:
+                   - 'id'
+                   - 'player'
+                   - 'tier'
+                   - 'rank'
+                   - 'wins'
+                   - 'losses'
+                   - 'inactive'
+                   - 'hotStreak'
+            list:
+                sort: ['id', 'ASC']
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - 'player'
+                    - 'tier'
+                    - 'rank'

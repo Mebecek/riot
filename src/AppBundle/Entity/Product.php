@@ -16,7 +16,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity()
  * @Vich\Uploadable
  */
 class Product

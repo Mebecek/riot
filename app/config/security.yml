@@ -3,12 +3,11 @@ security:
         AppBundle\Entity\User: bcrypt
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_MODERATOR, ROLE_MANAGE_ARTICLES, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_MODERATOR: [ROLE_MANAGE_ARTICLES, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_EDITOR: [ROLE_MANAGE_ARTICLES]
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
     providers:
-        our_users:
-            entity: { class: AppBundle\Entity\User, property: email }
+        fos_userbundle:
+            id: fos_user.user_provider.username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,18 +15,15 @@ security:
 
         main:
             anonymous: ~
-            guard:
-                authenticators:
-                  - app.security.login_form_authenticator
-            logout:
-                path: /logout
+            logout: ~
+            form_login:
+                csrf_token_generator: security.csrf.token_manager
             remember_me:
-                secret:   'neco'
-                lifetime: 604800
-                path:     /
+                secret: '%secret%'
 
             switch_user: ~
     access_control:
-        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_MODERATOR] }
-        - { path: ^/settings/, role: ROLE_USER }
-        - { path: ^/article/new, role: ROLE_USER }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }

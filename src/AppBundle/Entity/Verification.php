@@ -18,8 +18,8 @@ class Verification
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="verification")
-     * @ORM\JoinColumn(referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

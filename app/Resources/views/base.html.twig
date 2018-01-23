@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -14,10 +14,8 @@
     {% block socials %}
         <meta property="og:title" content="">
         <meta property="og:description" name="description" content="">
-        <meta property="og:url" content="{{ app.request.getSchemeAndHttpHost() }}{{ path('home') }}">
         <meta property="og:site_name" content="LolFindYou">
         <meta property="og:type" content="website">
-        <meta property="og:locale" content="{{ app.request.locale }}_{{ app.request.locale|upper }}">
         <meta name="twitter:card" content="summary_large_image">
     {% endblock %}
 
@@ -32,8 +30,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
-<body>
-
+<body onload="loadingloader()">
+<div id="preload">
+    <div class="loading"></div>
+</div>
 {% block header %}
     {{ include('header.html.twig') }}
 {% endblock %}
@@ -47,6 +47,7 @@
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/loading.js') }}"></script>
 {% endblock %}
 </body>
 </html>

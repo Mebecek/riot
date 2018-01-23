@@ -71,7 +71,7 @@ class GuzzleHttpClient
                 {
                     throw new TooManyRequestsHttpException();
                 }
-                dump($limit[0], $current[0]);
+                //dump($limit[0], $current[0]);
         }
 
         return json_decode($response->getBody());

@@ -10,16 +10,20 @@ easy_admin:
                     - 'email'
                     - 'roles'
             list:
+                sort: ['lastLogin', 'DESC']
                 title: '%%entity_label%% list'
                 fields:
                     - 'id'
                     - 'email'
-                    - 'nickname'
+                    - 'username'
                     - 'roles'
+                    - 'enabled'
+                    - 'lastLogin'
             edit:
                 title: '%%entity_label%% list'
                 fields:
                     - 'email'
-                    - 'email'
-                    - 'nickname'
+                    - 'username'
+                    - 'username_canonical'
                     - 'roles'
+                    - 'lastLogin'

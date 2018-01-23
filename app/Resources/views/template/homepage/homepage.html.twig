@@ -2,13 +2,111 @@
 
 {% block title %}Homepage{% endblock %}
 
-{% block body %}
-    <div class="jumbotron text-center">
-        <h1>Homepage</h1>
-        <p>Resize this responsive page to see the effect!</p>
-    </div>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/web/assets/mobirise-icons/mobirise-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/tether/tether.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap-grid.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap-reboot.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/theme/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/mobirise/css/mbr-additional.css') }}" type="text/css">
 {% endblock %}
 
-{% block javascripts %}
+{% block header %}
     {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <section class="cid-qHdwgRJQGe mbr-fullscreen mbr-parallax-background" id="header2-5">
+        <div class="mbr-overlay" style="opacity: 0.4; background-color: rgb(35, 35, 35);"></div>
+
+        <div class="container align-center">
+            <div class="row justify-content-md-center">
+                <div class="mbr-white col-md-10">
+                    <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1">
+                        Find your new friends</h1>
+
+                    <p class="mbr-text pb-3 mbr-fonts-style display-5">
+                        LolFindYou provides huge database of active players whose are looking for a teammate! Do not waste your time and lets get into it!</p>
+                    <div class="mbr-section-btn"><a class="btn btn-md btn-white-outline display-4" href="https://mobirise.com">Let's start</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="engine"><a href="https://mobirise.ws/d">best free website software</a></section><section class="features1 cid-qHdwb68dmx" id="features1-4">
+        <div class="container">
+            <div class="media-container-row">
+
+                <div class="card p-3 col-12 col-md-6 col-lg-4">
+                    <div class="card-img pb-3">
+                        <span class="mbr-iconfont mbri-timer"></span>
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title py-3 mbr-fonts-style display-5">
+                            No waiting...</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">
+                            It is more easier than it probably should look like. We can easily match a perfect friend for your requirements.</p>
+                    </div>
+                </div>
+
+                <div class="card p-3 col-12 col-md-6 col-lg-4">
+                    <div class="card-img pb-3">
+                        <span class="mbri-touch mbr-iconfont"></span>
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title py-3 mbr-fonts-style display-5">
+                            Mobile Friendly
+                        </h4>
+                        <p class="mbr-text mbr-fonts-style display-7">Our site is fully mobile friendly. You can find your teammates on the mobile phone too.&nbsp;</p>
+                    </div>
+                </div>
+
+                <div class="card p-3 col-12 col-md-6 col-lg-4">
+                    <div class="card-img pb-3">
+                        <span class="mbr-iconfont mbri-globe"></span>
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title py-3 mbr-fonts-style display-5">
+                            Up to date</h4>
+                        <p class="mbr-text mbr-fonts-style display-7">
+                            We are looking for the newest technologies and keep working on the site. Our system is being daily updated.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="header3 cid-qHdws1gArd mbr-parallax-background" id="header3-7">
+        <div class="container">
+            <div class="media-container-row">
+                <div class="mbr-figure" style="width: 100%;">
+                </div>
+
+                <div class="media-content">
+                    <h1 class="mbr-section-title mbr-white pb-3 mbr-fonts-style display-2">
+                        Still do not belive?</h1>
+
+                    <div class="mbr-section-text mbr-white pb-3 ">
+
+                    </div>
+                    <div class="mbr-section-btn">
+                        <a class="btn btn-md btn-primary display-4" href="https://mobirise.com">LEARN MORE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/web/assets/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/popper/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/tether/tether.min.js') }}"></script>
+    <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/smoothscroll/smooth-scroll.js') }}"></script>
+    <script src="{{ asset('assets/parallax/jarallax.min.js') }}"></script>
+    <script src="{{ asset('assets/theme/js/script.js') }}"></script>
 {% endblock %}

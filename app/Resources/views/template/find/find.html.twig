@@ -4,6 +4,11 @@
     Find summoner
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/input.css') }}">
+{% endblock %}
+
 {% block header %}
     {{ parent() }}
 {% endblock %}
@@ -14,177 +19,80 @@
         <p class="lead">You are able to customize every step bellow!</p>
         <div class="row">
             <div class="col-sm-3">
-                <div class="well" style="text-align: center">
-                    <img style="display: block; margin-left: auto; margin-right: auto" class="img-responsive" src="http://apollo-na-uploads.s3.amazonaws.com/1428907840832/challenger_1.png">
-                    <span class="label label-danger"><b>CHALLANGER</b></span>
-                </div>
+                <div class="row">
+                    <div class="well col-xs-6 col-md-12 col-sm-12" style="text-align: center">
+                        <img style="display: block; margin-left: auto; margin-right: auto" class="img-responsive" src="http://apollo-na-uploads.s3.amazonaws.com/1428907840832/challenger_1.png">
+                        <span class="label label-danger"><b>CHALLANGER</b></span>
+                    </div>
 
-                <div class="well">
-                    <p><b>Achievements</b></p>
-                    <span class="label label-danger"><b>VETERAN</b></span>
-                    <span class="label label-danger"><b>HUNTER</b></span>
-                    <span class="label label-primary"><b>LOL FINDER</b></span>
-                </div>
-
-                <div style="display: inline-block; width:100%" class="well" id="champsss">
-                    <p><b>Selected champions</b></p>
-                    {{ form_start(form, {'attr': {'class': 'form-champ'} }) }}
+                    <div class="well col-xs-6 col-md-12 col-sm-12">
+                        {{ form_start(form, {'attr': {'class': 'form-champ'} }) }}
+                            {{ form_row(form.region) }}
+                            {{ form_row(form.points,
+                                {'attr': {'min': 0, 'max': 1000000, 'step': 10000, 'value': 50000, 'class': 'discount_credits'} }
+                            ) }}
+                            <p><strong class="credits">50,000</strong> points</p>
+                        <p><b>Selected champions</b></p>
                         {{ form_widget(form.champion_list) }}
-                        <input type="submit" name="lel">
-                    {{ form_end(form) }}
-                </div>
+                        <div id="champsss"></div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit" name="lel">Find Summoners!</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
 
-                <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
-                    <li class="active"><a href="#vtab1" data-toggle="tab">Choose champions</a></li>
-                    <li><a href="#vtab2" data-toggle="tab">Select mastery level</a></li>
-                    <li><a href="#vtab3" data-toggle="tab">Look what we have found!</a></li>
-                </ul>
+                    <div class="well col-xs-12 col-md-12 col-sm-12">
+                        <p><b>Achievements</b></p>
+                        <span class="label label-danger"><b>VETERAN</b></span>
+                        <span class="label label-danger"><b>HUNTER</b></span>
+                        <span class="label label-primary"><b>LOL FINDER</b></span>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-9">
+                <div class="list-group">
+                    {% if inf is not null %}
+                        {% if inf[0] is empty %}
+                            <h3 style="text-align: center; margin-top: 35%;">No matched data found... try it again later :/</h3>
+                        {% endif %}
+                        <div id="test-list">
+                            <ul class="list">
+                            {% for matchedData in inf %}
+                                {% for baseData in matchedData %}
+                                    <div class="col-xs-12 col-sm-6 col-lg-4 name">
+                                        <div class="box">
+                                            <div class="icon">
+                                                <img class="image" alt="{{ baseData.player.getName() }}" src="{{ dragonData[0] }}{{ baseData.player.getProfileIconId() }}.png" />
+                                                <div class="info">
+                                                    <h3 class="title">{{ baseData.player.getName() }}</h3>
+                                                    <p>
+                                                        {{ baseData.getChampionPoints() }} points
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="space"></div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            </ul>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="pag-table" style="display: table; margin: 0 auto;">
+                                    <ul class="pagination"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                {% if inf is null %}
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="vtab1">
                         <div class="row">
                             <div class="col-sm-12">
                                 <h2>Champion list</h2>
-                                <p class="lead">Choose as many champions you want to play</p>
-                                <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-tabs-horizontal">
-                                    <li class="active"><a href="#htab1" data-toggle="tab">All roles</a></li>
-                                    <li><a href="#htab2" data-toggle="tab">Assasin</a></li>
-                                    <li><a href="#htab3" data-toggle="tab">Fighter</a></li>
-                                    <li><a href="#htab4" data-toggle="tab">Mage</a></li>
-                                    <li><a href="#htab5" data-toggle="tab">Marksman</a></li>
-                                    <li><a href="#htab6" data-toggle="tab">Support</a></li>
-                                    <li><a href="#htab7" data-toggle="tab">Tank</a></li>
-                                    <div class="input-group custom-search-form">
-                                        <input onkeyup="search()" id="search-champion" type="text" class="form-control search-champion">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary search-champion" type="button">
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </ul>
-
-                                <div id="champion-list" class="tab-content champion-content tab-view">
-                                    <div role="tabpanel" class="tab-pane fade in active" id="htab1">
-                                        {% for champion in champions %}
-                                            <div class="champ">
-
-                                                <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                <div class="champion-image-name">
-                                                    <span>{{ champion.name }}</span>
-                                                    <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="htab2">
-                                        {% for champion in champions %}
-                                            {% for tag in champion.tags %}
-                                                {% if tag == 'Assassin' %}
-                                                    <div class="champ">
-
-                                                        <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <div class="champion-image-name">
-                                                            <span>{{ champion.name }}</span>
-                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="htab3">
-                                        {% for champion in champions %}
-                                            {% for tag in champion.tags %}
-                                                {% if tag == 'Fighter' %}
-                                                    <div class="champ">
-
-                                                        <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <div class="champion-image-name">
-                                                            <span>{{ champion.name }}</span>
-                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="htab4">
-                                        {% for champion in champions %}
-                                            {% for tag in champion.tags %}
-                                                {% if tag == 'Mage' %}
-                                                    <div class="champ">
-
-                                                        <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <div class="champion-image-name">
-                                                            <span>{{ champion.name }}</span>
-                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="htab5">
-                                        {% for champion in champions %}
-                                            {% for tag in champion.tags %}
-                                                {% if tag == 'Marksman' %}
-                                                    <div class="champ">
-
-                                                        <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <div class="champion-image-name">
-                                                            <span>{{ champion.name }}</span>
-                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="htab6">
-                                        {% for champion in champions %}
-                                            {% for tag in champion.tags %}
-                                                {% if tag == 'Support' %}
-                                                    <div class="champ">
-
-                                                        <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <div class="champion-image-name">
-                                                            <span>{{ champion.name }}</span>
-                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="htab7">
-                                        {% for champion in champions %}
-                                            {% for tag in champion.tags %}
-                                                {% if tag == 'Tank' %}
-                                                    <div class="champ">
-
-                                                        <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <div class="champion-image-name">
-                                                            <span>{{ champion.name }}</span>
-                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
-                                                        </div>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="champion-history">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="vtab2">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <h2>Champion list</h2>
                                 <p class="lead">Choose as many champions you want to play with</p>
+
                                 <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-tabs-horizontal">
                                     <li class="active"><a href="#htab1" data-toggle="tab">All roles</a></li>
                                     <li><a href="#htab2" data-toggle="tab">Assasin</a></li>
@@ -213,9 +121,6 @@
                                                     <span>{{ champion.name }}</span>
                                                     <span id="id" style="display: none;">{{ champion.championId }}</span>
                                                 </div>
-                                                {% for skin in champion.skins %}
-                                                    <!--<span>{{ skin.name }}</span>-->
-                                                {% endfor %}
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -223,9 +128,13 @@
                                         {% for champion in champions %}
                                             {% for tag in champion.tags %}
                                                 {% if tag == 'Assassin' %}
-                                                    <div class="champ" style="float: left; width: 70px; height: 70px; margin: 11.3px;">
+                                                    <div class="champ">
+
                                                         <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <span>{{ champion.name }}</span>
+                                                        <div class="champion-image-name">
+                                                            <span>{{ champion.name }}</span>
+                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -235,9 +144,13 @@
                                         {% for champion in champions %}
                                             {% for tag in champion.tags %}
                                                 {% if tag == 'Fighter' %}
-                                                    <div class="champ" style="float: left; width: 70px; height: 70px; margin: 11.3px;">
+                                                    <div class="champ">
+
                                                         <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <span>{{ champion.name }}</span>
+                                                        <div class="champion-image-name">
+                                                            <span>{{ champion.name }}</span>
+                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -247,9 +160,13 @@
                                         {% for champion in champions %}
                                             {% for tag in champion.tags %}
                                                 {% if tag == 'Mage' %}
-                                                    <div class="champ" style="float: left; width: 70px; height: 70px; margin: 11.3px;">
+                                                    <div class="champ">
+
                                                         <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <span>{{ champion.name }}</span>
+                                                        <div class="champion-image-name">
+                                                            <span>{{ champion.name }}</span>
+                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -259,9 +176,13 @@
                                         {% for champion in champions %}
                                             {% for tag in champion.tags %}
                                                 {% if tag == 'Marksman' %}
-                                                    <div class="champ" style="float: left; width: 70px; height: 70px; margin: 11.3px;">
+                                                    <div class="champ">
+
                                                         <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <span>{{ champion.name }}</span>
+                                                        <div class="champion-image-name">
+                                                            <span>{{ champion.name }}</span>
+                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -271,9 +192,13 @@
                                         {% for champion in champions %}
                                             {% for tag in champion.tags %}
                                                 {% if tag == 'Support' %}
-                                                    <div class="champ" style="float: left; width: 70px; height: 70px; margin: 11.3px;">
+                                                    <div class="champ">
+
                                                         <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <span>{{ champion.name }}</span>
+                                                        <div class="champion-image-name">
+                                                            <span>{{ champion.name }}</span>
+                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -283,9 +208,13 @@
                                         {% for champion in champions %}
                                             {% for tag in champion.tags %}
                                                 {% if tag == 'Tank' %}
-                                                    <div class="champ" style="float: left; width: 70px; height: 70px; margin: 11.3px;">
+                                                    <div class="champ">
+
                                                         <img class="champion-image" width="70px" alt="{{ champion.image }}" src="{{ dragonData[1] }}{{ champion.image }}">
-                                                        <span>{{ champion.name }}</span>
+                                                        <div class="champion-image-name">
+                                                            <span>{{ champion.name }}</span>
+                                                            <span id="id" style="display: none;">{{ champion.championId }}</span>
+                                                        </div>
                                                     </div>
                                                 {% endif %}
                                             {% endfor %}
@@ -296,12 +225,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade in" id="vtab3">
-                        <h3>Step 3</h3>
-                        <p>Etiam id pharetra quam. Morbi tristique nunc vel sapien dapibus, sit amet imperdiet quam venenatis. Vestibulum et suscipit urna. Suspendisse volutpat quis est eu volutpat. Nulla non tortor venenatis turpis congue aliquet. Vivamus at elit vel massa elementum tempor sit amet sed odio. Nullam placerat, arcu sed ullamcorper ornare, erat erat placerat quam, in feugiat nulla purus in nunc. Maecenas vitae erat auctor, aliquam tellus et, vulputate eros.</p>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -315,4 +241,13 @@
     {{ parent() }}
     <script src="{{ asset('js/search.js') }}"></script>
     <script src="{{ asset('js/champion.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script>
+        var monkeyList = new List('test-list', {
+            valueNames: ['name'],
+            page: 4,
+            pagination: true
+        });
+    </script>
 {% endblock %}

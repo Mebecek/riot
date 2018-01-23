@@ -16,32 +16,62 @@ class Participant
     /**
      * @var integer
      */
-    private $participantId;
+    public $participantId;
 
     /**
      * @var integer
      */
-    private $teamId;
+    public $teamId;
 
     /**
      * @var integer
      */
-    private $championId;
+    public $championId;
 
     /**
      * @var integer
      */
-    private $spell1Id;
+    public $spell1Id;
 
     /**
      * @var integer
      */
-    private $spell2Id;
+    public $spell2Id;
 
     /**
      * @var string
      */
-    private $highestAchievedSeasonTier;
+    public $highestAchievedSeasonTier;
+
+    /**
+     * @var string
+     */
+    public $role;
+
+    /**
+     * @var string
+     */
+    public $lane;
+
+    /**
+     * @var integer
+     */
+    public $accountId;
+
+    /**
+     * @var string
+     */
+    public $platformId;
+
+    /**
+     * @var string
+     */
+    public $summonerName;
+
+    /**
+     * @var integer
+     */
+    public $summoner;
 
     /**
      * @return int
@@ -137,6 +167,102 @@ class Participant
     public function setHighestAchievedSeasonTier(string $highestAchievedSeasonTier)
     {
         $this->highestAchievedSeasonTier = $highestAchievedSeasonTier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function setRole(string $role)
+    {
+        $this->role = $role;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLane(): string
+    {
+        return $this->lane;
+    }
+
+    /**
+     * @param string $lane
+     */
+    public function setLane(string $lane)
+    {
+        $this->lane = $lane;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAccountId(): int
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * @param int $accountId
+     */
+    public function setAccountId(int $accountId)
+    {
+        $this->accountId = $accountId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlatformId(): string
+    {
+        return $this->platformId;
+    }
+
+    /**
+     * @param string $platformId
+     */
+    public function setPlatformId(string $platformId)
+    {
+        $this->platformId = $platformId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSummonerName(): string
+    {
+        return $this->summonerName;
+    }
+
+    /**
+     * @param string $summonerName
+     */
+    public function setSummonerName(string $summonerName)
+    {
+        $this->summonerName = $summonerName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSummoner(): int
+    {
+        return $this->summoner;
+    }
+
+    /**
+     * @param int $summoner
+     */
+    public function setSummoner(int $summoner)
+    {
+        $this->summoner = $summoner;
     }
 
 

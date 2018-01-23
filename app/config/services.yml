@@ -1,6 +1,6 @@
 parameters:
     riot_api.guzzle_client.class: AppBundle\Controller\Classes\GuzzleHttpClient
-    riot_api.service_champion.class: AppBundle\Controller\Service\ChampionService
+    riot_api.service_champion.class: ChampionBundle\Model\Repository\ChampionRepository
 
 services:
     riot_api.guzzle_client:
@@ -28,18 +28,21 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
-    app.security.login_form_authenticator:
-            class: AppBundle\Controller\Security\LoginFormAuthenticator
-            autowire: true
-    app.doctrine.hash_password_listener:
-            class: AppBundle\Doctrine\HashPasswordListener
-            autowire: true
-            tags:
-              - { name: doctrine.event_subscriber }
+    ChampionBundle\:
+        resource: '../../src/ChampionBundle/*'
+        exclude: '../../src/ChampionBundle/Model/{Entity}'
+
+    ChampionBundle\Controller\:
+        resource: '../../src/ChampionBundle/Controller'
+        tags: ['controller.service_arguments']
+
+    FindSummonerBundle\:
+        resource: '../../src/FindSummonerBundle/*'
+        exclude: '../../src/FindSummonerBundle/Model/{Entity}'
+
+    FindSummonerBundle\Controller\:
+        resource: '../../src/FindSummonerBundle/Controller'
+        tags: ['controller.service_arguments']
 
     AppBundle\Repository\CommentRepository:
       class: AppBundle\Repository\CommentRepository
@@ -53,14 +56,20 @@ services:
       arguments:
         - AppBundle\Entity\Verification
 
-    champion.repository:
-      class: AppBundle\Repository\ChampionRepository
+    ChampionBundle\Model\Repository\ChampionRepository:
+      class: ChampionBundle\Model\Repository\ChampionRepository
       factory: ['@doctrine.orm.entity_manager', getRepository]
       arguments:
-          - AppBundle\Entity\Champion
+          - ChampionBundle\Model\Entity\Champion
 
-    summoner.repository:
+    AppBundle\Repository\SummonerRepository:
       class: AppBundle\Repository\SummonerRepository
       factory: ['@doctrine.orm.entity_manager', getRepository]
       arguments:
           - AppBundle\Entity\Summoner
+
+    FindSummonerBundle\Model\Repository\MasteryRepository:
+      class: FindSummonerBundle\Model\Repository\MasteryRepository
+      factory: ['@doctrine.orm.entity_manager', getRepository]
+      arguments:
+          - FindSummonerBundle\Model\Entity\Mastery

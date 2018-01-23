@@ -16,37 +16,53 @@ class Match
     /**
      * @var integer
      */
-    private $gameId;
+    public $gameId;
 
     /**
      * @var integer
      */
-    private $gameDuration;
+    public $gameDuration;
 
     /**
      * @var integer
      */
-    private $seasonId;
+    public $seasonId;
 
     /**
      * @var string
      */
-    private $gameMode;
+    public $gameMode;
 
     /**
      * @var array
      */
-    private $team;
+    public $team;
 
     /**
      * @var string
      */
-    private $platformId;
+    public $platformId;
 
     /**
      * @var array
      */
-    private $participantIdentities;
+    public $participant;
+
+    /**
+     * @return int
+     */
+    public function getGameId(): int
+    {
+        return $this->gameId;
+    }
+
+    /**
+     * @param int $gameId
+     */
+    public function setGameId(int $gameId)
+    {
+        $this->gameId = $gameId;
+    }
 
     /**
      * @return int
@@ -81,6 +97,22 @@ class Match
     }
 
     /**
+     * @return string
+     */
+    public function getGameMode(): string
+    {
+        return $this->gameMode;
+    }
+
+    /**
+     * @param string $gameMode
+     */
+    public function setGameMode(string $gameMode)
+    {
+        $this->gameMode = $gameMode;
+    }
+
+    /**
      * @return array
      */
     public function getTeam(): array
@@ -89,27 +121,11 @@ class Match
     }
 
     /**
-     * @param array
+     * @param array $team
      */
     public function setTeam(array $team)
     {
-        $this->teams = $team;
-    }
-
-    /**
-     * @return int
-     */
-    public function getGameId(): int
-    {
-        return $this->gameId;
-    }
-
-    /**
-     * @param int $gameId
-     */
-    public function setGameId(int $gameId)
-    {
-        $this->gameId = $gameId;
+        $this->team = $team;
     }
 
     /**
@@ -129,36 +145,19 @@ class Match
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getGameMode(): string
+    public function getParticipant(): array
     {
-        return $this->gameMode;
+        return $this->participant;
     }
 
     /**
-     * @param string $gameMode
+     * @param array $participant
      */
-    public function setGameMode(string $gameMode)
+    public function setParticipant(array $participant)
     {
-        $this->gameMode = $gameMode;
+        $this->participant = $participant;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getParticipantIdentities()
-    {
-        return $this->participantIdentities;
-    }
-
-    /**
-     * @param mixed $participantIdentities
-     */
-    public function setParticipantIdentities($participantIdentities)
-    {
-        $this->participantIdentities = $participantIdentities;
-    }
-
 
 }

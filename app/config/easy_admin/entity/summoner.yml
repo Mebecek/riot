@@ -1,0 +1,32 @@
+easy_admin:
+    entities:
+        Summoner:
+            disabled_actions: ['edit']
+            class: AppBundle\Entity\Summoner
+            label: 'Summoner'
+            show:
+                fields:
+                    - 'id'
+                    - { property: 'summonerId', type: text }
+                    - { property: 'accountId', type: text }
+                    - 'name'
+                    - 'profileIconId'
+                    - 'revisionDate'
+                    - 'summonerLevel'
+            list:
+                sort: ['id', 'ASC']
+                title: '%%entity_label%% list'
+                fields:
+                    - 'id'
+                    - { property: 'summonerId', type: text }
+                    - { property: 'accountId', type: text }
+                    - 'name'
+            edit:
+                title: '%%entity_label%% list'
+                fields:
+                    - { property: 'summonerId', type: text }
+                    - { property: 'accountId', type: text }
+                    - 'name'
+                    - 'profileIconId'
+                    - 'revisionDate'
+                    - 'summonerLevel'

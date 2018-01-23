@@ -9,7 +9,9 @@
 namespace AppBundle\Controller\Service;
 
 use AppBundle\Entity\Timer;
-use Doctrine\ORM\EntityManager;
+use ChampionBundle\Model\Repository\ChampionRepository;
+use ChampionBundle\Service\ChampionService;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TimerService
 {
@@ -19,18 +21,28 @@ class TimerService
     private $championService;
 
     /**
-     * @var EntityManager
+     * @var EntityManagerInterface
      */
     private $entityManager;
 
     /**
+     * @var ChampionRepository
+     */
+    private $championRepository;
+
+    /**
      * Constructor
      * @param ChampionService $championService
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(ChampionService $championService, EntityManager $entityManager) {
+    public function __construct(
+        ChampionService $championService,
+        EntityManagerInterface $entityManager,
+        ChampionRepository $championRepository
+    ) {
         $this->championService = $championService;
         $this->entityManager = $entityManager;
+        $this->championRepository = $championRepository;
     }
 
     private function createTimer($region, $timestamp)
@@ -63,12 +75,30 @@ class TimerService
     public function checkTimer($region)
     {
         $repository = $this->getRepository()->findAll();
+        $championRepository = $this->championRepository->getRepository()->findAll();
+
+        if ($championRepository == null)
+        {
+            if ($repository == null)
+            {
+                $this->saveTimer($this->createTimer($region, time()));
+                return true;
+            } else {
+                foreach ($repository as $rep)
+                {
+                    $this->updateTimer($region, $rep);
+                    $this->championService->getChampions($region);
+                    return true;
+                }
+            }
+        }
 
         if ($repository == null)
         {
             $this->saveTimer($this->createTimer($region, time()));
             $this->championService->deleteChampions();
             $this->championService->getChampions($region);
+            return true;
         } else {
             foreach ($repository as $rep)
             {

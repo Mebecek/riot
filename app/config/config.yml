@@ -8,6 +8,9 @@ imports:
     - { resource: easy_admin/entity/champion.yml }
     - { resource: easy_admin/entity/version.yml }
     - { resource: easy_admin/entity/user.yml }
+    - { resource: easy_admin/entity/summoner.yml }
+    - { resource: easy_admin/entity/mastery.yml }
+    - { resource: easy_admin/entity/summoner_league.yml }
     - { resource: easy_admin/entity/verification.yml }
     - { resource: easy_admin/basic.yml }
     - { resource: easy_admin/design.yml }
@@ -18,6 +21,8 @@ parameters:
     locale: en
 
 framework:
+    translator:
+        enabled: false
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
@@ -41,7 +46,6 @@ framework:
     assets: ~
     php_errors:
         log: true
-    translator: ~
 
 # Twig Configuration
 twig:
@@ -70,7 +74,25 @@ doctrine:
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        #auto_mapping: true
+        mappings:
+            AppBundle:
+                mapping: true
+                type: annotation
+                dir: '%kernel.root_dir%/../src/AppBundle/Entity'
+                prefix: 'AppBundle\Entity'
+
+            ChampionBundle:
+                mapping: true
+                type: annotation
+                dir: '%kernel.root_dir%/../src/ChampionBundle/Model/Entity'
+                prefix: 'ChampionBundle\Model\Entity'
+
+            FindSummonerBundle:
+                mapping: true
+                type: annotation
+                dir: '%kernel.root_dir%/../src/FindSummonerBundle/Model/Entity'
+                prefix: 'FindSummonerBundle\Model\Entity'
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -79,3 +101,11 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    from_email:
+        address: you@example.com
+        sender_name: You

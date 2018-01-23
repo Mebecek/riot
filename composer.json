@@ -4,7 +4,9 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle"
+            "AppBundle\\": "src/AppBundle",
+            "ChampionBundle\\": "src/ChampionBundle",
+            "FindSummonerBundle\\": "src/FindSummonerBundle"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -54,7 +56,6 @@
     },
     "scripts": {
         "symfony-scripts": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
